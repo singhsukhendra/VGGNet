@@ -28,6 +28,7 @@
 	- 为了编写效率，均使用Function API。（事实上Keras的构建精髓正是Function API）
 - 模型测试
 	- 模型的训练及测试均在[Caltech101数据集](http://www.vision.caltech.edu/Image_Datasets/Caltech101/)上进行（该数据集由李飞飞整理，含一个干扰项）。
+	- 为了比较模型性能，不进行数据增广，采用同样的优化函数Adam。
 - **关键提示**
 	- 当使用VGGNet时一般使用的并非上述任何一种网络模型，每个block的卷积层数目、是否使用Dropout、是否使用BN等完全依据当前任务修改即可。
 	- VGG最伟大之处绝对不是这个VGG模型而是小卷积核多层叠加的思想。

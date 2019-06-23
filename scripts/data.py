@@ -13,16 +13,17 @@ class Caltech101(object):
         import os
         import cv2
         import numpy as np
+        from tqdm import tqdm
         categories = os.listdir(self.folder)
         # 去除干扰项
         categories.remove('BACKGROUND_Google')
         x_train = []
         y_train = []
-        for i in range(len(categories)):
+        for i in tqdm(range(len(categories))):
             root = os.path.join(self.folder, categories[i])
             for file in os.listdir(root):
                 file_name = os.path.join(root, file)
-                img = cv2.resize(cv2.imread(file_name), (64, 64))
+                img = cv2.resize(cv2.imread(file_name), (96, 96))
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
                 x_train.append(img)
                 y_train.append(i)
