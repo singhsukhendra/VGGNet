@@ -1,7 +1,7 @@
 # -*-coding:utf-8-*-
 """author: Zhou Chen
    datetime: 2019/6/23 20:26
-   desc: 读取caltech数据集
+   desc: 读取Caltech101数据集
 """
 
 
@@ -23,7 +23,7 @@ class Caltech101(object):
             root = os.path.join(self.folder, categories[i])
             for file in os.listdir(root):
                 file_name = os.path.join(root, file)
-                img = cv2.resize(cv2.imread(file_name), (96, 96))
+                img = cv2.resize(cv2.imread(file_name), (128, 128))
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
                 x_train.append(img)
                 y_train.append(i)
