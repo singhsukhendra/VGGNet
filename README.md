@@ -29,7 +29,7 @@
 - 模型测试
 	- 模型的训练及测试均在[Caltech101数据集](http://www.vision.caltech.edu/Image_Datasets/Caltech101/)上进行（该数据集由李飞飞整理，含一个干扰项）。
 	- 为了比较模型性能，不进行数据增广，采用同样的优化函数Adam。
-	- 模型训练选取适中batch_size，为128，并且小模型每个block没有使用BN或者Dropout，这毕竟只是防止过拟合的技巧。
+	- 模型训练选取适中batch_size，为128，使用了BN和Dropout等训练技巧（这不影响核心网络结构）。
 	- 后面的深层模型如VGG16和VGG19不使用Dropout或者BN难以训练，每个block输出时使用BN层。
 - **关键提示**
 	- 当使用VGGNet时一般使用的并非上述任何一种网络模型，每个block的卷积层数目、是否使用Dropout、是否使用BN等完全依据当前任务修改即可。
