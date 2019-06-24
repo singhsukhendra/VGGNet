@@ -4,7 +4,7 @@
    desc: the project
 """
 from keras.layers import Input
-from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout
+from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout, BatchNormalization
 from keras.models import Model
 
 
@@ -102,25 +102,30 @@ def VGG16C(input_shape=(224, 224, 3), n_classes=1000):
     x = Conv2D(filters=64, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu')(input_layer)
     x = Conv2D(64, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
+    x = BatchNormalization()(x)
     # block2
     x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
+    x = BatchNormalization()(x)
     # block3
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(256, (1, 1), strides=1, padding='same', activation='relu')(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
+    x = BatchNormalization()(x)
     # block4
     x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(512, (1, 1), strides=1, padding='same', activation='relu')(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
+    x = BatchNormalization()(x)
     # block5
     x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(512, (1, 1), strides=1, padding='same', activation='relu')(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
+    x = BatchNormalization()(x)
     # fc
     x = Flatten()(x)
     x = Dense(4096, activation='relu')(x)
