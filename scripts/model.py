@@ -58,23 +58,23 @@ def VGG13(input_shape=(224, 224, 3), n_classes=1000):
     input_layer = Input(shape=input_shape)
     # block1
     x = Conv2D(filters=64, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu')(input_layer)
-    x = Conv2D(64, 3, strides=1, padding='same', activation='relu')(x)
+    x = Conv2D(64, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block2
-    x = Conv2D(128, 3, strides=1, padding='same', activation='relu')(x)
-    x = Conv2D(128, 3, strides=1, padding='same', activation='relu')(x)
+    x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
+    x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block3
-    x = Conv2D(256, 3, strides=1, padding='same', activation='relu')(x)
-    x = Conv2D(256, 3, strides=1, padding='same', activation='relu')(x)
+    x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
+    x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block4
-    x = Conv2D(512, 3, strides=1, padding='same', activation='relu')(x)
-    x = Conv2D(512, 3, strides=1, padding='same', activation='relu')(x)
+    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block5
-    x = Conv2D(512, 3, strides=1, padding='same', activation='relu')(x)
-    x = Conv2D(512, 3, strides=1, padding='same', activation='relu')(x)
+    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # fc
     x = Flatten()(x)
@@ -226,6 +226,3 @@ def VGG19(input_shape=(224, 224, 3), n_classes=1000):
     return model
 
 
-if __name__ == '__main__':
-    VGG_13 = VGG13()
-    print(VGG_13.summary())
