@@ -111,18 +111,15 @@ def VGG16C(input_shape=(224, 224, 3), n_classes=1000):
     # block1
     x = Conv2D(filters=64, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu')(input_layer)
     x = Conv2D(64, (3, 3), strides=1, padding='same', activation='relu')(x)
-    x = BatchNormalization()(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block2
     x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
-    x = BatchNormalization()(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block3
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(256, (1, 1), strides=1, padding='same', activation='relu')(x)
-    x = BatchNormalization()(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block4
     x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
@@ -161,18 +158,15 @@ def VGG16D(input_shape=(224, 224, 3), n_classes=1000):
     # block1
     x = Conv2D(filters=64, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu')(input_layer)
     x = Conv2D(64, (3, 3), strides=1, padding='same', activation='relu')(x)
-    x = BatchNormalization()(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block2
     x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
-    x = BatchNormalization()(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block3
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
-    x = BatchNormalization()(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block4
     x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
@@ -211,19 +205,16 @@ def VGG19(input_shape=(224, 224, 3), n_classes=1000):
     # block1
     x = Conv2D(filters=64, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu')(input_layer)
     x = Conv2D(64, (3, 3), strides=1, padding='same', activation='relu')(x)
-    x = BatchNormalization()(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block2
     x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
-    x = BatchNormalization()(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block3
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
     x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
-    x = BatchNormalization()(x)
     x = MaxPooling2D(2, 2, padding='same')(x)
     # block4
     x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
