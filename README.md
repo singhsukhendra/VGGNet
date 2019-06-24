@@ -25,15 +25,124 @@
 			- 使用1\*1小卷积核也是为了增加非线性变换次数。
 - 代码实现
 	- 由于代码过多，只列举VGG16和VGG19的实现代码，其余见Github（文末给出）。
+	- 代码
+		- ```python
+			def VGG16D(input_shape=(224, 224, 3), n_classes=1000):
+			    """
+			    实现VGG16D的网络结构（著名的VGG16）
+			    没有使用Dropout和BN
+			    :param input_shape:
+			    :param n_classes:
+			    :return:
+			    """
+			    # input layer
+			    input_layer = Input(shape=input_shape)
+			    # block1
+			    x = Conv2D(filters=64, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu')(input_layer)
+			    x = Conv2D(64, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = MaxPooling2D(2, 2, padding='same')(x)
+			    # block2
+			    x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = MaxPooling2D(2, 2, padding='same')(x)
+			    # block3
+			    x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = MaxPooling2D(2, 2, padding='same')(x)
+			    # block4
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = MaxPooling2D(2, 2, padding='same')(x)
+			    x = BatchNormalization()(x)
+			    # block5
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = MaxPooling2D(2, 2, padding='same')(x)
+			    x = BatchNormalization()(x)
+			    # fc
+			    x = Flatten()(x)
+			    x = Dense(4096, activation='relu')(x)
+			    x = Dropout(rate=0.5)(x)
+			    x = Dense(4096, activation='relu')(x)
+			    x = Dropout(rate=0.5)(x)
+			    output_layer = Dense(n_classes, activation='softmax')(x)
+			
+			    model = Model(inputs=input_layer, outputs=output_layer)
+			    return model
+			
+			
+			def VGG19(input_shape=(224, 224, 3), n_classes=1000):
+			    """
+			    实现VGG16C的网络结构（著名的VGG16）
+			    没有使用Dropout和BN
+			    :param input_shape:
+			    :param n_classes:
+			    :return:
+			    """
+			    # input layer
+			    input_layer = Input(shape=input_shape)
+			    # block1
+			    x = Conv2D(filters=64, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu')(input_layer)
+			    x = Conv2D(64, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = MaxPooling2D(2, 2, padding='same')(x)
+			    # block2
+			    x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(128, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = MaxPooling2D(2, 2, padding='same')(x)
+			    # block3
+			    x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(256, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = MaxPooling2D(2, 2, padding='same')(x)
+			    # block4
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = MaxPooling2D(2, 2, padding='same')(x)
+			    x = BatchNormalization()(x)
+			    # block5
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = Conv2D(512, (3, 3), strides=1, padding='same', activation='relu')(x)
+			    x = MaxPooling2D(2, 2, padding='same')(x)
+			    x = BatchNormalization()(x)
+			    # fc
+			    x = Flatten()(x)
+			    x = Dense(4096, activation='relu')(x)
+			    x = Dropout(rate=0.5)(x)
+			    x = Dense(4096, activation='relu')(x)
+			    x = Dropout(rate=0.5)(x)
+			    output_layer = Dense(n_classes, activation='softmax')(x)
+			
+			    model = Model(inputs=input_layer, outputs=output_layer)
+			    return model
+			```
 	- 为了编写效率，均使用Function API。（事实上Keras的构建精髓正是Function API）
 - 模型测试
-	- 模型的训练及测试均在[Caltech101数据集](http://www.vision.caltech.edu/Image_Datasets/Caltech101/)上进行（该数据集由李飞飞整理，含一个干扰项）。
-	- 为了比较模型性能，不进行数据增广，采用同样的优化函数Adam。
-	- 模型训练选取适中batch_size，为128，使用了BN和Dropout等训练技巧（这不影响核心网络结构）。
-	- 后面的深层模型如VGG16和VGG19不使用Dropout或者BN难以训练，每个block输出时使用BN层。
+	- 训练说明
+		- 模型的训练及测试均在[Caltech101数据集](http://www.vision.caltech.edu/Image_Datasets/Caltech101/)上进行（该数据集由李飞飞整理，含一个干扰项）。
+		- 为了比较模型性能，不进行数据增广，采用同样的优化函数Adam。
+		- 模型训练选取适中batch_size，为128，使用了BN和Dropout等训练技巧（这不影响核心网络结构）。
+		- 后面的深层模型如VGG16和VGG19不使用Dropout或者BN难以训练，每个block输出时使用BN层。
+	- 训练结果
+		- 损失图像
+			- ![](https://img-blog.csdnimg.cn/20190624183229873.png)
+			- 从上图可以看出，随着模型深度加深，训练集上损失收敛速度变慢，验证集上损失收敛波动大。
+		- 准确率图像
+			- ![](https://img-blog.csdnimg.cn/20190624183414254.png)
+			- 从上图可以看出，随着模型深度加深，训练集上准确率上升变慢，在同样的epoch下，到达的最终验证集准确率变低。
+		- 总体说明
+			- 整体看来，随着模型加深，需要更多的训练控制如Dropout和BN这样的中间层来提高训练效果。
 - **关键提示**
 	- 当使用VGGNet时一般使用的并非上述任何一种网络模型，每个block的卷积层数目、是否使用Dropout、是否使用BN等完全依据当前任务修改即可。
 	- VGG最伟大之处绝对不是这个VGG模型而是小卷积核多层叠加的思想，这也是后来的卷积网络的大部分采用的思路。
 - 补充说明
 	- 本项目实现基于Keras2(TensorFlow后端)以及Python3。
-	- 具体代码已经开源于我的Github。
+	- 具体代码已经开源于我的Github，欢迎star或者fork。
+	- 训练过程在ipynb文件内可见。如有疏漏，欢迎评论指出。
